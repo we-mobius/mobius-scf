@@ -1,0 +1,22 @@
+{
+  "name": "cloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "npx webpack",
+    "deploy": "npx mincloud deploy cigaret_config ./ifanr_cigaret/",
+    "invoke": "npx mincloud invoke cigaret_config"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mincloud": "^1.0.6",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "authing-js-sdk": "^3.20.1"
+  }
+}
