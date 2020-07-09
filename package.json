@@ -1,7 +1,7 @@
 {
   "name": "@we-mobius/mobius-scf",
   "version": "1.0.0",
-  "description": "",
+  "description": "One-stop station for SCF(serverless cloud functions) development and management.",
   "main": "main.js",
   "bin": {
     "mobius-scf": "./scripts/index.js"

@@ -17,7 +17,7 @@
 
 <h1 align="center">Mobius SCF</h1>
 
-🎨 One-stop station for SCF(serverless cloud functions) development and management.
+🎢 One-stop station for SCF(serverless cloud functions) development and management.
 
 ## Documentation
 
@@ -28,7 +28,7 @@ git clone git@github.com:we-mobius/mobius-scf.git
 # 2. intialize the dependencies & register to gloal path
 npm install && npm link
 
-# 3. edit your project configrations
+# 3. edit your project configurations
 cp ./configs/secret.example.js ./configs/secret.js && code ./configs/secret.js
 
 # 4. read instructions & user helps
