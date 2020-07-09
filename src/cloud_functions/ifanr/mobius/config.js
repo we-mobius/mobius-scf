@@ -1,4 +1,15 @@
-function makeResponse(content) {
+const {
+  makeSuccessResponse,
+  makeFailResponse,
+  makeErrorResponse
+} = require('../../../common/index.js')
+
+const TABLE_NAME = 'mobius_config'
+
+// eslint-disable-next-line no-undef
+const IfanrBaaS = BaaS
+
+const makeIfanrResponse = content => {
   return {
     content: JSON.stringify(content),
     content_type: 'application/json',
@@ -6,18 +17,17 @@ function makeResponse(content) {
   }
 }
 
-async function getConfig(options) {
+const getConfig = async options => {
   try {
-    let { id } = options.token.data
+    const { id } = options.token.data
     let config
 
-    // cigaret_config: 100645
-    const ConfigTable = new BaaS.TableObject('cigaret_config')
-    const query = new BaaS.Query()
+    const ConfigTable = new IfanrBaaS.TableObject(TABLE_NAME)
+    const query = new IfanrBaaS.Query()
 
     query.compare('unique_id', '=', id)
 
-    let finds = await ConfigTable.setQuery(query).find()
+    const finds = await ConfigTable.setQuery(query).find()
 
     if (finds.status === 200 && finds.data.meta.total_count > 0) {
       config = finds.data.objects[0].config
@@ -25,27 +35,23 @@ async function getConfig(options) {
       config = null
     }
 
-    return {
-      id,
-      config
-    }
+    return makeSuccessResponse({ id, config })
   } catch (err) {
-    throw err
+    return makeErrorResponse(err)
   }
 }
 
-async function setConfig(options) {
+const setConfig = async options => {
   try {
-    let { id } = options.token.data
-    let payload = options.payload
+    const { id } = options.token.data
+    const payload = options.payload
     let res
 
-    // cigaret_config: 100645
-    const ConfigTable = new BaaS.TableObject('cigaret_config')
+    const ConfigTable = new IfanrBaaS.TableObject(TABLE_NAME)
 
-    const query = new BaaS.Query()
+    const query = new IfanrBaaS.Query()
     query.compare('unique_id', '=', id)
-    let finds = await ConfigTable.setQuery(query).find()
+    const finds = await ConfigTable.setQuery(query).find()
     if (finds.status === 200) {
       if (finds.data.meta.total_count > 0) {
         const recordId = finds.data.objects[0]._id
@@ -57,19 +63,19 @@ async function setConfig(options) {
         record.set({ ...payload, unique_id: id })
         res = await record.save()
       }
+      delete res.headers
+      res = makeSuccessResponse(res)
     } else {
-      res = { status: finds.status }
+      res = makeFailResponse(finds.status)
     }
-
-    delete res.headers
     return res
   } catch (err) {
-    throw err
+    return makeErrorResponse(err)
   }
 }
 
 const commandHandler = async (options) => {
-  let { action } = options
+  const { action } = options
   let res
   switch (action) {
     case 'get':
@@ -78,18 +84,20 @@ const commandHandler = async (options) => {
     case 'set':
       res = await setConfig(options)
       break
+    default:
+      res = makeFailResponse('Expected an "action" param witch should be "get" or "set"')
+      break
   }
   return res
 }
 
-exports.main = async function mainFn(event) {
+const main = async event => {
   // const command = {
   //   action: 'get',
   //   token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoia2NpZ2FyZXRAb3V0bG9vay5jb20iLCJpZCI6IjVlZDRjMTlkMzcwZTg1MjI0Mjk2MDQ1NSIsImNsaWVudElkIjoiNWVhMGZjZTQ1MWJiOGQ5NDlmN2UxNzAxIn0sImlhdCI6MTU5MTI4MzY4NywiZXhwIjoxNTkyNTc5Njg3fQ.RHr0lRB0iVvpnJp0AgNiyqOgtWw9zk9nRpiuRxL-hQ8',
   //   payload: {
   //     config: {
-  //       hello: ' world!!',
-  //       name: 'cigaret'
+  //       hello: 'Hello Mobius!',
   //     }
   //   }
   // }
@@ -97,16 +105,19 @@ exports.main = async function mainFn(event) {
   let result
 
   // NOTE: Do not use object format data in avoid of axios's default encode behaviour to params
-  let authState = await BaaS.request.get(`https://users.authing.cn/authing/token?access_token=${command.token}`)
+  const authState = await IfanrBaaS.request.get(`https://users.authing.cn/authing/token?access_token=${command.token}`)
     .then(res => {
       return res.data
     })
-  // id: 5ed4c19d370e852242960455
 
   if (authState.status === true) {
     result = await commandHandler({ ...command, token: authState.token })
   } else {
-    result = authState
+    result = makeFailResponse(authState)
   }
-  return makeResponse(result)
+  return makeIfanrResponse(result)
+}
+
+module.exports = {
+  main: main
 }

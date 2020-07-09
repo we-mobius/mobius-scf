@@ -1,7 +1,8 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true,
+    commonjs: true,
+    es2020: true,
     node: true
   },
   extends: [
@@ -16,10 +17,10 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    "max-len": [1, {
-      "code": 100,
-      "ignoreUrls": true,
-      "ignoreTemplateLiterals": true
+    'max-len': [1, {
+      code: 100,
+      ignoreUrls: true,
+      ignoreTemplateLiterals: true
     }]
   }
 }
