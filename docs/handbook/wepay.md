@@ -30,7 +30,7 @@
     type: String("JSAPI" || "NATIVE" || ""),
     openid: String(openid),
     goods: [{
-      id: String(goodsId),
+      id: String(goodsId, len = 12),
     }],
     attach?: String(len <= 127)
   }

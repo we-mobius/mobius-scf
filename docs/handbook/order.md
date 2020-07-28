@@ -163,6 +163,14 @@
     updated: Boolean(true || false),
     outTradeNo: String(len = 20),
     openid: String(openid),
+    goods: Array(Object(pattern = {
+      id: String(goodsId),
+      name: String(goodsName),
+      price: Number(goodsPrice)
+    })),
+    attach: String(len <= 127),
+    deviceInfo: String(len <= 32),
+    tradeType: String("JSAPI" || "NATIVE"),
     older: undefined || String("NOTPAY" || "SUCCESS" || "REFUND" || "CLOSED" || "REVOKED" || "USERPAYING" || "PAYERROR"),
     newer: String("NOTPAY" || "SUCCESS" || "REFUND" || "CLOSED" || "REVOKED" || "USERPAYING" || "PAYERROR"),
   }

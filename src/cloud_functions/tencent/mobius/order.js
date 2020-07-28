@@ -215,6 +215,10 @@ const handlers = {
               [requestType]: {
                 outTradeNo: updates.outTradeNo,
                 openid: updates.openid,
+                goods: updates.goods,
+                deviceInfo: updates.deviceInfo,
+                attach: updates.attach,
+                tradeType: updates.tradeType,
                 older: updates.older.tradeState,
                 newer: updates.newer.tradeState
               }
@@ -226,6 +230,10 @@ const handlers = {
           [requestType]: {
             outTradeNo: order.outTradeNo,
             openid: order.openid,
+            goods: order.goods,
+            deviceInfo: order.deviceInfo,
+            attach: order.attach,
+            tradeType: order.tradeType,
             older: undefined,
             newer: order.tradeState
           }
