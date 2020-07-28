@@ -44,5 +44,11 @@
       "config": ".cz-config.js"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.19.2",
+    "crypto": "^1.0.1",
+    "tcb-admin-node": "^1.23.0",
+    "wx-server-sdk": "^2.1.2",
+    "xml2js": "^0.4.23"
+  }
 }

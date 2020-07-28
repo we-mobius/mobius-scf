@@ -44,6 +44,7 @@ const getTcbFnEntry = name => `${getTcbFnRoot()}/main.js`
 const getTcbFnOutput = name => `${getTcbFnRoot()}/index.js`
 
 // @see https://docs.cloudbase.net/cli/intro.html
+// @see https://cloud.tencent.com/document/product/876/19360
 const tcbList = (env = getTcbEnv()) => {
   exec(`npx tcb functions:list -e ${env}`)
 }

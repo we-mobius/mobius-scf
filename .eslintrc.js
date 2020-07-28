@@ -18,9 +18,10 @@ module.exports = {
   },
   rules: {
     'max-len': [1, {
-      code: 100,
+      code: 140,
       ignoreUrls: true,
       ignoreTemplateLiterals: true
-    }]
+    }],
+    'no-unused-vars': [1]
   }
 }

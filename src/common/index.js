@@ -1,3 +1,5 @@
+const wepay = require('./wepay.js');
+
 const makeBaseResponse = status => {
   return {
     status: status,
@@ -24,8 +26,24 @@ const makeErrorResponse = err => {
   return response
 }
 
+const isSuccessResponse = response => response.status === 'success'
+const isFailResponse = response => response.status === 'fail'
+const isErrorResponse = response => response.status === 'error'
+
+const randomString = (length, chars) => {
+  var result = '';
+  chars = chars || '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+  return result;
+}
+
 module.exports = {
+  ...wepay,
   makeSuccessResponse,
   makeFailResponse,
-  makeErrorResponse
+  makeErrorResponse,
+  isSuccessResponse,
+  isFailResponse,
+  isErrorResponse,
+  randomString
 }
