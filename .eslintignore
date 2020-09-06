@@ -5,5 +5,5 @@ dist/*
 release/*
 !.cz-config.js
 
-src/**/index.js
+src/cloud_functions/index.js
 drafts/
