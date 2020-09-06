@@ -51,7 +51,7 @@ const getPosts = async ({ timeRange, num }) => {
 }
 
 const createPost = async ({ openid, tags, title, detail, tel, wechat, qq }) => {
-  console.log(`[createPost] openid -> ${openid}, tags -> ${tags}, title -> ${title}, detail -> ${detail}`)
+  console.log(`[createPost] openid -> ${openid}, tags -> ${tags}, title -> ${title}, detail -> ${detail}, tel -> ${tel}, wechat -> ${wechat}, qq -> ${qq}`)
   const res = await db
     .collection(ENV_VARS.postsCollectionName)
     .add({ openid, tags, title, detail, publish_time: +new Date(), tel: tel || '', wechat: wechat || '', qq: qq || '' })
@@ -75,9 +75,9 @@ const handlers = {
 
     return res
   },
-  [BOARD_REQUEST_TYPES.createPost]: async ({ openid, tags, title, detail }) => {
+  [BOARD_REQUEST_TYPES.createPost]: async ({ openid, tags, title, detail, tel, wechat, qq }) => {
     const requestType = BOARD_REQUEST_TYPES.createPost
-    console.log(`[handlers][${requestType}] openid -> ${openid}, tags -> ${tags}, title -> ${title}, detail -> ${detail}`)
+    console.log(`[handlers][${requestType}] openid -> ${openid}, tags -> ${tags}, title -> ${title}, detail -> ${detail}, tel -> ${tel}, wechat -> ${wechat}, qq -> ${qq}`)
     const titleValidity = await checkSecurity({ text: title }).then(res => {
       console.log(`[handlers][${requestType}] titleValidity -> ${JSON.stringify(res)}`)
       return res.EvilTokens.length === 0
@@ -98,7 +98,7 @@ const handlers = {
       return makeFailResponse('内容中含有不当信息，请重新组织措辞。')
     }
     console.log('[createPost] post content valid!')
-    const res = await createPost({ openid, tags, title, detail })
+    const res = await createPost({ openid, tags, title, detail, tel, wechat, qq })
     return makeSuccessResponse({ [requestType]: res })
   }
 }

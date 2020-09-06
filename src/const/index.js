@@ -1,4 +1,4 @@
-const REQUEST_TYPES = {
+export const REQUEST_TYPES = {
   createOrder: 'create_order',
   getOrder: 'get_order',
   updateOrder: 'update_order',
@@ -10,22 +10,28 @@ const REQUEST_TYPES = {
   NATIVEWepay: 'NATIVE'
 }
 
-const MPAPI_REQUEST_TYPES = {
+export const MPAPI_REQUEST_TYPES = {
   getAccessToken: 'get_access_token',
   getJsAPITicket: 'get_js_api_ticket',
   getCardAPITicket: 'get_card_api_ticket'
 }
 
-const SECURITY_CHECK_REQUEST_TYPES = {
+export const MPAUTH_REQUEST_TYPES = {
+  snsapiBase: 'snsapi_base',
+  snsapiUserinfo: 'snsapi_userinfo',
+  userInfo: 'user_info'
+}
+
+export const SECURITY_CHECK_REQUEST_TYPES = {
   checkTextSecurity: 'check_text_security'
 }
 
-const BOARD_REQUEST_TYPES = {
+export const BOARD_REQUEST_TYPES = {
   getPosts: 'get_posts',
   createPost: 'create_post'
 }
 
-const TRADE_STATES = {
+export const TRADE_STATES = {
   notpay: 'NOTPAY',
   success: 'SUCCESS',
   refund: 'REFUND',
@@ -33,12 +39,4 @@ const TRADE_STATES = {
   revoked: 'REVOKED',
   paying: 'USERPAYING',
   payerror: 'PAYERROR'
-}
-
-module.exports = {
-  REQUEST_TYPES: REQUEST_TYPES,
-  TRADE_STATES: TRADE_STATES,
-  BOARD_REQUEST_TYPES: BOARD_REQUEST_TYPES,
-  MPAPI_REQUEST_TYPES: MPAPI_REQUEST_TYPES,
-  SECURITY_CHECK_REQUEST_TYPES: SECURITY_CHECK_REQUEST_TYPES
 }

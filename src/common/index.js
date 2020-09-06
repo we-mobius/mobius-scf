@@ -1,30 +1,29 @@
 const wepay = require('./wepay.js')
 const tcb = require('./tcb.js')
 
-const makeBaseResponse = status => {
-  return {
-    status: status,
-    status_message: '',
-    data: {}
-  }
-}
+const makeBaseResponse = status => ({
+  status: status,
+  status_message: '',
+  data: {}
+})
 
-const makeSuccessResponse = data => {
+const makeSuccessResponse = (data, message = '') => {
   const response = makeBaseResponse('success')
+  response.status_message = message
   response.data = { ...response.data, ...data }
   return response
 }
 
-const makeFailResponse = (fail, data) => {
+const makeFailResponse = (message, data = {}) => {
   const response = makeBaseResponse('fail')
-  response.status_message = fail
+  response.status_message = message
   response.data = { ...response.data, ...data }
   return response
 }
 
-const makeErrorResponse = (err, data) => {
+const makeErrorResponse = (message, data = {}) => {
   const response = makeBaseResponse('error')
-  response.status_message = err
+  response.status_message = message
   response.data = { ...response.data, ...data }
   return response
 }
